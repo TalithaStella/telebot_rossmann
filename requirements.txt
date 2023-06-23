@@ -2,3 +2,4 @@ flask==2.2.2
 jsonpickle==2.2.0
 pandas==1.5.3
 requests==2.29.0
+scikit-learn==1.2.2
