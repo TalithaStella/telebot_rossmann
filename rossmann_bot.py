@@ -12,13 +12,11 @@ token = '5998262096:AAFfB9a4Wy9esHebux3_aSN6132L-RP1xUA'
 
 # t.me/rossmann_TS_bot
 
-# # Link que ta na documentação "Making Requests", também enviado pelo botfather
-# # Tirar tudo que tem depois de bot \/ e colocar o token
 # https://api.telegram.org/bot5998262096:AAFfB9a4Wy9esHebux3_aSN6132L-RP1xUA/getMe
 
 # #Getupdates
 # https://api.telegram.org/bot5998262096:AAFfB9a4Wy9esHebux3_aSN6132L-RP1xUA/getUpdates
-# #Get update mostra novas msgs na conversa
+
 
 # #Webhook
 # https://api.telegram.org/bot5998262096:AAFfB9a4Wy9esHebux3_aSN6132L-RP1xUA/setWebhook?url=https://notes-rossmann-telegram.onrender.com
@@ -26,8 +24,7 @@ token = '5998262096:AAFfB9a4Wy9esHebux3_aSN6132L-RP1xUA'
 
 # #Available Methods/SendMessage
 # https://api.telegram.org/bot5998262096:AAFfB9a4Wy9esHebux3_aSN6132L-RP1xUA/sendMessage?chat_id=6130854233&text=Hi Talitha!
-# # o ? diz para a maquina que 'a partir de agora vc esta passando parâmetros'
-# #O chat ID pode ser encontrado na msg que vc mandou para o bot
+
 
 def send_message(chat_id, text):
     url= 'https://api.telegram.org/bot{}/'.format(token)
@@ -42,8 +39,8 @@ def send_message(chat_id, text):
 def load_dataset(store_id):
 
     # loading test dataset
-    df10 = pd.read_csv('dataset/test_rossmann.csv')
-    df_store_raw = pd.read_csv('dataset/store_rossmann.csv')
+    df10 = pd.read_csv('C:/C.Python/1CDS/rossmann_project/dataset/test_rossmann.csv')
+    df_store_raw = pd.read_csv('C:/C.Python/1CDS/rossmann_project/dataset/store_rossmann.csv')
 
     # merge test dataset + store 
     df_test = pd.merge(df10, df_store_raw, how='left', on='Store')
@@ -116,25 +113,9 @@ def index():
 
                 #calculation
                 d2 = d1[['store', 'prediction']].groupby('store').sum().reset_index()
-
-                # MAE and MAPE
-                d2_aux = round(d1[['store', 'sales', 'predictions']].groupby( 'store' ).apply( lambda x: mean_absolute_error( x['sales'], x['predictions'] ) ).reset_index().rename( columns={0:'MAE'}), 2)
-                d2_aux2 = round(d1[['store', 'sales', 'predictions']].groupby( 'store' ).apply( lambda x: mean_absolute_percentage_error( x['sales'], x['predictions'] ) ).reset_index().rename( columns={0:'MAPE'}), 2)
-
-                # Merge
-                d2_aux3 = pd.merge( d2_aux, d2_aux2, how='inner', on='store' ) 
-                d3 = pd.merge( d2, d2_aux3, how='inner', on='store' )
-
-                # Scenarios 
-                d3['worst_scenario'] = d3['predictions'] - d3['MAE']
-                d3['best_scenario'] = d3['predictions'] + d3['MAE']
-
+                
                 #send message
-                # msg = 'Store Number {} will sell R${:,.2f} in the next 6 weeks'.format(d2['store'].values[0], d2['prediction'].values[0]) 
-                msg = ('Store Number {} will sell R${:,.2f} in the next 6 weeks. Worst scenario {}, Best scenario{} (margin error: {}R$ or {}%)'
-                       .format(d2['store'].values[0], d2['prediction'].values[0], d3['worst_scenario'], d3['best_scenario'], d2_aux, d2_aux2 ) )
-
-
+                msg = 'Store Number {} will sell R${:,.2f} in the next 6 weeks'.format(d2['store'].values[0], d2['prediction'].values[0]) 
 
                 send_message(chat_id, msg)
 
