@@ -19,7 +19,7 @@ token = '5998262096:AAFfB9a4Wy9esHebux3_aSN6132L-RP1xUA'
 
 
 # #Webhook
-# https://api.telegram.org/bot5998262096:AAFfB9a4Wy9esHebux3_aSN6132L-RP1xUA/setWebhook?url=https://notes-rossmann-telegram.onrender.com
+# https://api.telegram.org/bot5998262096:AAFfB9a4Wy9esHebux3_aSN6132L-RP1xUA/setWebhook?url=https://telebot-rossmann-mgl9.onrender.com
 
 
 # #Available Methods/SendMessage
